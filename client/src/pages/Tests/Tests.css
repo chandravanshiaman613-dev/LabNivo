@@ -1,0 +1,2 @@
+.catalogue-page{padding:70px max(7vw,28px);min-height:70vh}.catalogue-page h1{font-size:42px;margin:8px 0}.catalogue-page>p{color:var(--muted);margin-bottom:25px}.empty-results{padding:30px 0}
+.catalogue-state{padding:30px 0;color:var(--muted)}.error-state{color:#b94232!important}.chips .selected{border-color:var(--primary);color:var(--primary);background:#eaf7f2}

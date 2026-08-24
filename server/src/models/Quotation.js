@@ -1,0 +1,6 @@
+import mongoose from 'mongoose'
+
+export const QUOTATION_STATUSES = ['DRAFT', 'CREATED', 'CUSTOMER_APPROVED', 'CUSTOMER_REJECTED', 'CONVERTED_TO_BOOKING', 'EXPIRED']
+const itemSchema = new mongoose.Schema({ test: { type: mongoose.Schema.Types.ObjectId, ref: 'Test', required: true }, name: { type: String, required: true }, quantity: { type: Number, required: true, min: 1 }, mrp: { type: Number, required: true }, discountPercent: { type: Number, required: true }, sellingPrice: { type: Number, required: true } }, { _id: false })
+const quotationSchema = new mongoose.Schema({ quotationId: { type: String, required: true, unique: true, index: true }, lead: { type: mongoose.Schema.Types.ObjectId, ref: 'PrescriptionLead', required: true, index: true }, selectedTests: { type: [itemSchema], validate: v => v.length > 0 }, subtotal: { type: Number, required: true }, discount: { type: Number, required: true }, collectionCharge: { type: Number, required: true, default: 0 }, finalAmount: { type: Number, required: true }, status: { type: String, enum: QUOTATION_STATUSES, default: 'CREATED' }, booking: { type: mongoose.Schema.Types.ObjectId, ref: 'Booking', default: null } }, { timestamps: true })
+export default mongoose.model('Quotation', quotationSchema)

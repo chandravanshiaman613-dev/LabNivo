@@ -1,0 +1,8 @@
+import { useEffect, useState } from 'react'
+import { Link, useNavigate, useParams } from 'react-router-dom'
+import { getPackageBySlug } from '../../services/packageService'
+import { money } from '../../utils/catalogue'
+import { useCart } from '../../context/CartContext'
+import { whatsappLink } from '../../config/business'
+import './PackageDetails.css'
+export default function PackageDetails(){const {slug}=useParams(),[pack,setPack]=useState(null),[error,setError]=useState('');const {add}=useCart();const navigate=useNavigate();useEffect(()=>{getPackageBySlug(slug).then(setPack).catch(()=>setError('Unable to load this package.'))},[slug]);if(error)return <main className="detail-page"><p className="error-state">{error}</p></main>;if(!pack)return <main className="detail-page">Loading package...</main>;const item={...pack,type:'PACKAGE',reference:pack._id,price:pack.sellingPrice};return <main className="detail-page"><Link className="back-link" to="/packages">← All packages</Link><span className="test-category">HEALTH PACKAGE</span><h1>{pack.name}</h1><p>{pack.description}</p><div className="detail-price"><span className="mrp">{money(pack.mrp)}</span><strong>{money(pack.sellingPrice)}</strong></div><div className="included-box"><b>Included checks</b><p>{pack.includedTests.map(test=>test.name).join(', ')}</p></div><button className="button button-primary" onClick={()=>{add(item);navigate('/book')}}>Book Package</button><a className="button button-secondary" href={whatsappLink(`Hello LAB NIVO, I want to book: Package: ${pack.name} Price: ${money(pack.sellingPrice)} Patient Name: Mobile: Preferred Date: Preferred Time: Address: Please confirm the booking.`)} target="_blank" rel="noreferrer">Book on WhatsApp</a></main>}

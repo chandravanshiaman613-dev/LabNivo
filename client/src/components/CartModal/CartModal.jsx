@@ -1,0 +1,5 @@
+import { useNavigate } from 'react-router-dom'
+import { useCart } from '../../context/CartContext'
+import { money } from '../../utils/catalogue'
+import './CartModal.css'
+export default function CartModal(){const {open,setOpen,items,remove,total}=useCart();const navigate=useNavigate();if(!open)return null;const book=()=>{setOpen(false);navigate('/book')};return <div className="modal-backdrop" onClick={()=>setOpen(false)}><section className="modal" onClick={event=>event.stopPropagation()}><button className="close" onClick={()=>setOpen(false)}>×</button><span className="overline">YOUR SELECTION</span><h2>Booking cart</h2>{items.length?<><div className="cart-items">{items.map(item=><div key={item.slug}><span><b>{item.name}</b><small>Home sample collection</small></span><strong>{money(item.price)}</strong><button onClick={()=>remove(item.slug)}>Remove</button></div>)}</div><div className="total"><span>Estimated total</span><b>{money(total)}</b></div><button className="button button-primary full" onClick={book}>Continue to book →</button></>:<div className="empty">Your cart is empty.</div>}</section></div>}

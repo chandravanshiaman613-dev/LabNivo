@@ -1,0 +1,1 @@
+export async function lookupPincode(pincode) { if (!/^\d{6}$/.test(pincode)) return null; const response = await fetch(`https://api.postalpincode.in/pincode/${pincode}`); const [data] = await response.json(); const office = data?.PostOffice?.[0]; return office ? { city: office.District, district: office.District, state: office.State } : null }
