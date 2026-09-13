@@ -1,0 +1,398 @@
+[
+  {
+    "name": "Basic Health Checkup",
+    "slug": "basic-health-checkup",
+    "description": "Essential screening for blood count, sugar, liver, kidney and urine health.",
+    "includedTestNames": [
+      "Complete Blood Count (CBC)",
+      "Blood Glucose Fasting",
+      "Liver Function Test (LFT)",
+      "Kidney Function Test (KFT/RFT)",
+      "Urine Routine & Microscopy"
+    ],
+    "mrp": 1200,
+    "discountPercent": 41.75,
+    "sellingPrice": 699,
+    "preparation": "Fasting for 8-10 hours is recommended where applicable. Follow doctor or laboratory instructions.",
+    "reportTAT": "4 Hours",
+    "imageUrl": "",
+    "status": "active"
+  },
+  {
+    "name": "Smart Full Body Checkup",
+    "slug": "smart-full-body-checkup",
+    "description": "Routine full body screening for blood, diabetes, thyroid, liver, kidney and cholesterol.",
+    "includedTestNames": [
+      "Complete Blood Count (CBC)",
+      "Blood Glucose Fasting",
+      "HbA1c",
+      "Thyroid Profile Total (T3, T4, TSH)",
+      "Liver Function Test (LFT)",
+      "Kidney Function Test (KFT/RFT)",
+      "Lipid Profile",
+      "Urine Routine & Microscopy"
+    ],
+    "mrp": 1800,
+    "discountPercent": 44.5,
+    "sellingPrice": 999,
+    "preparation": "Fasting for 8-10 hours is recommended where applicable. Follow doctor or laboratory instructions.",
+    "reportTAT": "4 Hours",
+    "imageUrl": "",
+    "status": "active"
+  },
+  {
+    "name": "Complete Full Body Checkup",
+    "slug": "complete-full-body-checkup",
+    "description": "Comprehensive routine screening covering blood, diabetes, thyroid, liver, kidney, cholesterol, urine and vitamins.",
+    "includedTestNames": [
+      "Complete Blood Count (CBC)",
+      "Blood Glucose Fasting",
+      "HbA1c",
+      "Thyroid Profile Total (T3, T4, TSH)",
+      "Liver Function Test (LFT)",
+      "Kidney Function Test (KFT/RFT)",
+      "Lipid Profile",
+      "Urine Routine & Microscopy",
+      "Vitamin B12",
+      "Vitamin D Total-25 Hydroxy"
+    ],
+    "mrp": 2800,
+    "discountPercent": 46.46,
+    "sellingPrice": 1499,
+    "preparation": "Fasting for 8-10 hours is recommended where applicable. Follow doctor or laboratory instructions.",
+    "reportTAT": "4 Hours",
+    "imageUrl": "",
+    "status": "active"
+  },
+  {
+    "name": "Full Body Advanced Health Checkup",
+    "slug": "full-body-advanced-health-checkup",
+    "description": "Advanced health screening with diabetes, thyroid, liver, kidney, lipid and vitamin testing.",
+    "includedTestNames": [
+      "Complete Blood Count (CBC)",
+      "Blood Glucose Fasting",
+      "HbA1c",
+      "Thyroid Profile Free (FT3, FT4, TSH)",
+      "Liver Function Test (LFT)",
+      "Kidney Function Test (KFT/RFT)",
+      "Lipid Profile",
+      "Urine Routine & Microscopy",
+      "Vitamin B12",
+      "Vitamin D Total-25 Hydroxy",
+      "Iron Profile"
+    ],
+    "mrp": 3800,
+    "discountPercent": 47.39,
+    "sellingPrice": 1999,
+    "preparation": "Fasting for 8-10 hours is recommended where applicable. Follow doctor or laboratory instructions.",
+    "reportTAT": "4 Hours",
+    "imageUrl": "",
+    "status": "active"
+  },
+  {
+    "name": "Senior Citizen Health Package",
+    "slug": "senior-citizen-health-package",
+    "description": "Routine screening for senior adults covering blood, sugar, cholesterol, thyroid, liver, kidney and vitamins.",
+    "includedTestNames": [
+      "Complete Blood Count (CBC)",
+      "Blood Glucose Fasting",
+      "HbA1c",
+      "Thyroid Profile Total (T3, T4, TSH)",
+      "Liver Function Test (LFT)",
+      "Kidney Function Test (KFT/RFT)",
+      "Lipid Profile",
+      "Vitamin B12",
+      "Vitamin D Total-25 Hydroxy",
+      "Urine Routine & Microscopy",
+      "Uric Acid"
+    ],
+    "mrp": 4200,
+    "discountPercent": 40.5,
+    "sellingPrice": 2499,
+    "preparation": "Fasting for 8-10 hours is recommended where applicable. Follow doctor or laboratory instructions.",
+    "reportTAT": "4 Hours",
+    "imageUrl": "",
+    "status": "active"
+  },
+  {
+    "name": "Diabetes Screening Package",
+    "slug": "diabetes-screening-package",
+    "description": "Basic diabetes screening with fasting glucose, post-meal glucose, HbA1c and urine testing.",
+    "includedTestNames": [
+      "Blood Glucose Fasting",
+      "Blood Glucose PP",
+      "HbA1c",
+      "Urine Routine & Microscopy"
+    ],
+    "mrp": 850,
+    "discountPercent": 41.29,
+    "sellingPrice": 499,
+    "preparation": "Fasting for 8-10 hours is recommended where applicable. Follow doctor or laboratory instructions.",
+    "reportTAT": "4 Hours",
+    "imageUrl": "",
+    "status": "active"
+  },
+  {
+    "name": "Thyroid Care Package",
+    "slug": "thyroid-care-package",
+    "description": "Thyroid screening covering thyroid hormone testing.",
+    "includedTestNames": [
+      "Thyroid Profile Total (T3, T4, TSH)",
+      "Thyroid Profile Free (FT3, FT4, TSH)"
+    ],
+    "mrp": 1200,
+    "discountPercent": 33.42,
+    "sellingPrice": 799,
+    "preparation": "Fasting for 8-10 hours is recommended where applicable. Follow doctor or laboratory instructions.",
+    "reportTAT": "4 Hours",
+    "imageUrl": "",
+    "status": "active"
+  },
+  {
+    "name": "Liver Care Package",
+    "slug": "liver-care-package",
+    "description": "Routine liver health screening with liver enzymes and bilirubin testing.",
+    "includedTestNames": [
+      "Liver Function Test (LFT)",
+      "SGPT/ALT",
+      "SGOT/AST",
+      "Bilirubin Total"
+    ],
+    "mrp": 1000,
+    "discountPercent": 30.1,
+    "sellingPrice": 699,
+    "preparation": "Fasting for 8-10 hours is recommended where applicable. Follow doctor or laboratory instructions.",
+    "reportTAT": "4 Hours",
+    "imageUrl": "",
+    "status": "active"
+  },
+  {
+    "name": "Kidney Care Package",
+    "slug": "kidney-care-package",
+    "description": "Routine kidney screening with kidney function, urine and uric acid testing.",
+    "includedTestNames": [
+      "Kidney Function Test (KFT/RFT)",
+      "Urine Routine & Microscopy",
+      "Uric Acid",
+      "Creatinine"
+    ],
+    "mrp": 1050,
+    "discountPercent": 33.43,
+    "sellingPrice": 699,
+    "preparation": "Fasting for 8-10 hours is recommended where applicable. Follow doctor or laboratory instructions.",
+    "reportTAT": "4 Hours",
+    "imageUrl": "",
+    "status": "active"
+  },
+  {
+    "name": "Heart Health Package",
+    "slug": "heart-health-package",
+    "description": "Routine cardiovascular risk screening with lipid, sugar and inflammation testing.",
+    "includedTestNames": [
+      "Lipid Profile",
+      "Blood Glucose Fasting",
+      "HbA1c",
+      "hs-CRP"
+    ],
+    "mrp": 1450,
+    "discountPercent": 31.1,
+    "sellingPrice": 999,
+    "preparation": "Fasting for 8-10 hours is recommended where applicable. Follow doctor or laboratory instructions.",
+    "reportTAT": "4 Hours",
+    "imageUrl": "",
+    "status": "active"
+  },
+  {
+    "name": "Vitamin Health Package",
+    "slug": "vitamin-health-package",
+    "description": "Common vitamin and mineral screening covering Vitamin D, B12 and calcium.",
+    "includedTestNames": [
+      "Vitamin D Total-25 Hydroxy",
+      "Vitamin B12",
+      "Calcium"
+    ],
+    "mrp": 1500,
+    "discountPercent": 33.4,
+    "sellingPrice": 999,
+    "preparation": "Fasting for 8-10 hours is recommended where applicable. Follow doctor or laboratory instructions.",
+    "reportTAT": "4 Hours",
+    "imageUrl": "",
+    "status": "active"
+  },
+  {
+    "name": "Women Wellness Package",
+    "slug": "women-wellness-package",
+    "description": "Routine wellness screening covering blood count, thyroid, vitamins and iron status.",
+    "includedTestNames": [
+      "Complete Blood Count (CBC)",
+      "Thyroid Profile Total (T3, T4, TSH)",
+      "Vitamin D Total-25 Hydroxy",
+      "Vitamin B12",
+      "Iron Profile",
+      "Ferritin"
+    ],
+    "mrp": 2500,
+    "discountPercent": 40.04,
+    "sellingPrice": 1499,
+    "preparation": "Fasting for 8-10 hours is recommended where applicable. Follow doctor or laboratory instructions.",
+    "reportTAT": "4 Hours",
+    "imageUrl": "",
+    "status": "active"
+  },
+  {
+    "name": "Men Wellness Package",
+    "slug": "men-wellness-package",
+    "description": "Routine wellness screening covering blood, sugar, liver, kidney, thyroid, lipids and PSA.",
+    "includedTestNames": [
+      "Complete Blood Count (CBC)",
+      "Blood Glucose Fasting",
+      "Thyroid Profile Total (T3, T4, TSH)",
+      "Liver Function Test (LFT)",
+      "Kidney Function Test (KFT/RFT)",
+      "Lipid Profile",
+      "PSA Total"
+    ],
+    "mrp": 2600,
+    "discountPercent": 42.35,
+    "sellingPrice": 1499,
+    "preparation": "Fasting for 8-10 hours is recommended where applicable. Follow doctor or laboratory instructions.",
+    "reportTAT": "4 Hours",
+    "imageUrl": "",
+    "status": "active"
+  },
+  {
+    "name": "Fever Profile",
+    "slug": "fever-profile",
+    "description": "Common laboratory screening for fever symptoms including blood count, dengue, malaria, typhoid screening and CRP.",
+    "includedTestNames": [
+      "Complete Blood Count (CBC)",
+      "Dengue NS1",
+      "Dengue IgG/IgM",
+      "Malaria Parasite Test",
+      "Widal Test",
+      "CRP"
+    ],
+    "mrp": 1900,
+    "discountPercent": 47.42,
+    "sellingPrice": 999,
+    "preparation": "Fasting for 8-10 hours is recommended where applicable. Follow doctor or laboratory instructions.",
+    "reportTAT": "4 Hours",
+    "imageUrl": "",
+    "status": "active"
+  },
+  {
+    "name": "Bone & Joint Health Package",
+    "slug": "bone-joint-health-package",
+    "description": "Screening package covering Vitamin D, B12, calcium, uric acid and inflammation markers.",
+    "includedTestNames": [
+      "Vitamin D Total-25 Hydroxy",
+      "Vitamin B12",
+      "Calcium",
+      "Uric Acid",
+      "ESR",
+      "CRP"
+    ],
+    "mrp": 1800,
+    "discountPercent": 38.94,
+    "sellingPrice": 1099,
+    "preparation": "Fasting for 8-10 hours is recommended where applicable. Follow doctor or laboratory instructions.",
+    "reportTAT": "4 Hours",
+    "imageUrl": "",
+    "status": "active"
+  },
+  {
+    "name": "Pre-Employment Health Package",
+    "slug": "pre-employment-health-package",
+    "description": "Routine pre-employment screening covering blood, sugar, liver, kidney, urine and selected infectious disease tests.",
+    "includedTestNames": [
+      "Complete Blood Count (CBC)",
+      "Blood Glucose Fasting",
+      "Liver Function Test (LFT)",
+      "Kidney Function Test (KFT/RFT)",
+      "Urine Routine & Microscopy",
+      "HBsAg",
+      "HIV 1 & 2"
+    ],
+    "mrp": 1800,
+    "discountPercent": 44.5,
+    "sellingPrice": 999,
+    "preparation": "Fasting for 8-10 hours is recommended where applicable. Follow doctor or laboratory instructions.",
+    "reportTAT": "4 Hours",
+    "imageUrl": "",
+    "status": "active"
+  },
+  {
+    "name": "Pregnancy Basic Screening Package",
+    "slug": "pregnancy-basic-screening-package",
+    "description": "Basic laboratory screening including pregnancy hormone, blood count, urine and thyroid testing.",
+    "includedTestNames": [
+      "Beta hCG",
+      "Complete Blood Count (CBC)",
+      "Urine Routine & Microscopy",
+      "Thyroid Profile Total (T3, T4, TSH)"
+    ],
+    "mrp": 1500,
+    "discountPercent": 33.4,
+    "sellingPrice": 999,
+    "preparation": "Fasting for 8-10 hours is recommended where applicable. Follow doctor or laboratory instructions.",
+    "reportTAT": "4 Hours",
+    "imageUrl": "",
+    "status": "active"
+  },
+  {
+    "name": "PCOS PCOD Screening Package",
+    "slug": "pcos-pcod-screening-package",
+    "description": "Hormonal screening that may support clinical evaluation of PCOS or PCOD when advised by a doctor.",
+    "includedTestNames": [
+      "Thyroid Profile Total (T3, T4, TSH)",
+      "FSH",
+      "LH",
+      "Prolactin",
+      "Testosterone Total"
+    ],
+    "mrp": 1900,
+    "discountPercent": 31.63,
+    "sellingPrice": 1299,
+    "preparation": "Fasting for 8-10 hours is recommended where applicable. Follow doctor or laboratory instructions.",
+    "reportTAT": "4 Hours",
+    "imageUrl": "",
+    "status": "active"
+  },
+  {
+    "name": "Anemia Profile",
+    "slug": "anemia-profile",
+    "description": "Laboratory screening assessing blood count, iron stores, Vitamin B12 and iron status.",
+    "includedTestNames": [
+      "Complete Blood Count (CBC)",
+      "Iron Profile",
+      "Ferritin",
+      "Vitamin B12"
+    ],
+    "mrp": 1500,
+    "discountPercent": 33.4,
+    "sellingPrice": 999,
+    "preparation": "Fasting for 8-10 hours is recommended where applicable. Follow doctor or laboratory instructions.",
+    "reportTAT": "4 Hours",
+    "imageUrl": "",
+    "status": "active"
+  },
+  {
+    "name": "Cancer Screening Tumor Marker Package",
+    "slug": "cancer-screening-tumor-marker-package",
+    "description": "Selected tumor marker tests for screening or clinical support when recommended by a qualified healthcare professional.",
+    "includedTestNames": [
+      "PSA Total",
+      "CEA",
+      "CA-125",
+      "CA 19-9",
+      "AFP"
+    ],
+    "mrp": 4800,
+    "discountPercent": 37.52,
+    "sellingPrice": 2999,
+    "preparation": "Fasting for 8-10 hours is recommended where applicable. Follow doctor or laboratory instructions.",
+    "reportTAT": "4 Hours",
+    "imageUrl": "",
+    "status": "active"
+  }
+]
