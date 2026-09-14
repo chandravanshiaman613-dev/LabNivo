@@ -1,5 +1,24 @@
 import api from './api'
-export const validateCoupon=async(payload)=> (await api.post('/coupons/validate',payload)).data.data
-export const getCoupons=async()=> (await api.get('/admin/coupons')).data.data
-export const saveCoupon=async(item)=> (item._id ? await api.put(`/admin/coupons/${item._id}`,item) : await api.post('/admin/coupons',item)).data.data
-export const setCouponActive=async(id,active)=> (await api.put(`/admin/coupons/${id}/status`,{active})).data.data
+
+export const validateCoupon = async (payload) => {
+  const response = await api.post('/coupons/validate', payload)
+  return response.data.data
+}
+
+export const getCoupons = async () => {
+  const response = await api.get('/admin/coupons')
+  return Array.isArray(response.data?.data) ? response.data.data : []
+}
+
+export const saveCoupon = async (item) => {
+  const response = item._id
+    ? await api.put(`/admin/coupons/${item._id}`, item)
+    : await api.post('/admin/coupons', item)
+
+  return response.data.data
+}
+
+export const setCouponActive = async (id, active) => {
+  const response = await api.put(`/admin/coupons/${id}/status`, { active })
+  return response.data.data
+}
