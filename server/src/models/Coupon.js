@@ -11,6 +11,9 @@ const couponSchema = new mongoose.Schema({
   validUntil: { type: Date, default: null },
   usageLimit: { type: Number, min: 0, default: 0 },
   usageCount: { type: Number, min: 0, default: 0 },
+  // This deliberately defaults to false so existing coupons do not become
+  // customer-facing until an administrator explicitly opts in.
+  showToCustomers: { type: Boolean, default: false, index: true },
   active: { type: Boolean, default: true, index: true }
 }, { timestamps: true })
 

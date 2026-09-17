@@ -5,7 +5,7 @@ import { getCoupons, saveCoupon, setCouponActive } from '../../services/couponSe
 const err=e=>e?.response?.data?.message||'Unable to save changes.'
 const testBlank={name:'',category:'',mrp:'',sellingPrice:'',reportTAT:'',sampleType:'',description:'',preparation:'',imageUrl:'',homeCollection:true,active:true}
 const packageBlank={name:'',description:'',includedTests:[],mrp:'',sellingPrice:'',imageUrl:'',active:true}
-const couponBlank={code:'',discountType:'PERCENTAGE',discountValue:'',customerEligibility:'ALL_CUSTOMERS',minimumOrder:0,maximumDiscount:0,validFrom:new Date().toISOString().slice(0,10),validUntil:'',usageLimit:0,active:true}
+const couponBlank={code:'',discountType:'PERCENTAGE',discountValue:'',customerEligibility:'ALL_CUSTOMERS',minimumOrder:0,maximumDiscount:0,validFrom:new Date().toISOString().slice(0,10),validUntil:'',usageLimit:0,showToCustomers:false,active:true}
 const discount=x=>Number(x.mrp)>0&&Number(x.sellingPrice)>=0?(((Number(x.mrp)-Number(x.sellingPrice))/Number(x.mrp))*100):0
 function Form({ value, onChange, onSave, onCancel, kind, tests = [] }) {
   const set = (key, val) => onChange({ ...value, [key]: val })
@@ -40,6 +40,7 @@ function Form({ value, onChange, onSave, onCancel, kind, tests = [] }) {
     <label>Valid From<input required type="date" value={String(value.validFrom).slice(0, 10)} onChange={e => set('validFrom', e.target.value)} /></label>
     <label>Valid Until<input type="date" value={value.validUntil ? String(value.validUntil).slice(0, 10) : ''} onChange={e => set('validUntil', e.target.value)} /></label>
     <label>Usage Limit (0 = unlimited)<input type="number" min="0" value={value.usageLimit} onChange={e => set('usageLimit', e.target.value)} /></label>
+    <label className="wide"><input type="checkbox" checked={value.showToCustomers === true} onChange={e => set('showToCustomers', e.target.checked)} /> Show this active offer to customers at checkout</label>
     <label className="wide"><input type="checkbox" checked={value.active !== false} onChange={e => set('active', e.target.checked)} /> Active</label>
   </div>
   return <form className="booking-form admin-catalogue-form" onSubmit={e => { e.preventDefault(); onSave() }}>

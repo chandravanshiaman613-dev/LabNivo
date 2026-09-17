@@ -5,6 +5,11 @@ export const validateCoupon = async (payload) => {
   return response.data.data
 }
 
+export const getCustomerCoupons = async () => {
+  const response = await api.get('/coupons/offers')
+  return Array.isArray(response.data?.data) ? response.data.data : []
+}
+
 export const getCoupons = async () => {
   const response = await api.get('/admin/coupons')
   if (!Array.isArray(response.data?.data)) {

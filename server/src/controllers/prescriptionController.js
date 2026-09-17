@@ -7,7 +7,7 @@ import PrescriptionLead,{PRESCRIPTION_STATUSES} from '../models/PrescriptionLead
 const uploadDir=path.resolve('uploads/prescriptions');fs.mkdirSync(uploadDir,{recursive:true})
 const allowed=new Set(['image/jpeg','image/jpg','image/png','application/pdf']);const extension={ 'image/jpeg':'.jpg','image/jpg':'.jpg','image/png':'.png','application/pdf':'.pdf'}
 const storage=multer.diskStorage({destination:uploadDir,filename:(_r,file,done)=>done(null,`prescription-${crypto.randomUUID()}${extension[file.mimetype]||''}`)})
-export const prescriptionUpload=multer({storage,limits:{fileSize:5*1024*1024},fileFilter:(_r,file,done)=>done(null,allowed.has(file.mimetype))}).single('prescription')
+export const prescriptionUpload=multer({storage,limits:{fileSize:5*1024*1024},fileFilter:(_r,file,done)=>allowed.has(file.mimetype)?done(null,true):done(new Error('File rejected'))}).single('prescription')
 const fields=['patientName','mobile','alternateMobile','age','gender','address','village','area','city','district','state','pincode','landmark','preferredCallbackTime','notes']
 function data(input){return Object.fromEntries(fields.map(key=>[key,typeof input[key]==='string'?input[key].trim():input[key]]))}
 async function nextId(){const result=await mongoose.connection.collection('counters').findOneAndUpdate({_id:'prescriptionLeadId'},[{$set:{sequence:{$add:[{$ifNull:['$sequence',10000]},1]}}}],{upsert:true,returnDocument:'after'});return `LN-P-${result?.value?.sequence??result.sequence}`}
