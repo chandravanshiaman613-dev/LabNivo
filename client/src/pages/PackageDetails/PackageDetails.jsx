@@ -149,6 +149,7 @@ export default function PackageDetails() {
 
   return (
     <main className="detail-page">
+      {pack.imageUrl && <img className="detail-image" src={pack.imageUrl} alt={pack.name} onError={event => { event.currentTarget.style.display = 'none' }} />}
       <Link className="back-link" to="/packages">
         ← All packages
       </Link>
@@ -217,6 +218,8 @@ export default function PackageDetails() {
       >
         Book Package
       </button>
+
+      <button className="button button-secondary" onClick={() => add(item)}>Add to Cart</button>
 
       <a
         className="button button-secondary"

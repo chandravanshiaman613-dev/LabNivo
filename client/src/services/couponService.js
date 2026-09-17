@@ -7,7 +7,10 @@ export const validateCoupon = async (payload) => {
 
 export const getCoupons = async () => {
   const response = await api.get('/admin/coupons')
-  return Array.isArray(response.data?.data) ? response.data.data : []
+  if (!Array.isArray(response.data?.data)) {
+    throw new Error('Unexpected coupon-list response from the API.')
+  }
+  return response.data.data
 }
 
 export const saveCoupon = async (item) => {

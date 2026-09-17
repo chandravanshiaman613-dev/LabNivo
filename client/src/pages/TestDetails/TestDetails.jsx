@@ -218,6 +218,7 @@ export default function TestDetails() {
 
   return (
     <main className="detail-page">
+      {test.imageUrl && <img className="detail-image" src={test.imageUrl} alt={test.name} onError={event => { event.currentTarget.style.display = 'none' }} />}
 
       <Link
         className="back-link"
@@ -330,6 +331,8 @@ export default function TestDetails() {
         >
           Book Test
         </button>
+
+        <button className="button button-secondary" onClick={() => add(item)}>Add to Cart</button>
 
         <a
           className="button button-secondary"

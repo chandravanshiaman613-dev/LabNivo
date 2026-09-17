@@ -410,6 +410,13 @@ export default function Home() {
         </div>
       </section>
 
+      <section className="home-info-grid">
+        <article><span className="overline">HOW IT WORKS</span><h2>Simple diagnostic booking</h2><ol><li>Search & choose</li><li>Book online</li><li>Sample collection where available</li><li>Processing at the applicable partner laboratory</li><li>Get your report</li></ol><Link className="button button-secondary" to="/how-it-works">Learn how it works</Link></article>
+        <article><span className="overline">PARTNER NETWORK</span><h2>Diagnostics, transparently</h2><p>LAB NIVO is a diagnostic booking platform connecting customers with applicable partner diagnostic laboratories. We do not represent LAB NIVO as owning every laboratory.</p><Link className="button button-secondary" to="/partner-network">Partner Network</Link></article>
+      </section>
+
+      <section className="home-service-strip"><div><span>⌖</span><b>Currently serving</b><p>Indore · Bhopal</p></div><div><span>⌕</span><b>Check service area</b><p>Confirm availability at booking</p></div><Link className="button button-primary" to="/tests">Book a Test</Link></section>
+
       <footer
         className="contact-section"
         id="contact"

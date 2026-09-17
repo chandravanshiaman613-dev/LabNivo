@@ -15,6 +15,7 @@ import Collector from './pages/Collector/Collector'
 import MyOrders from './pages/MyOrders/MyOrders'
 import OrderDetails from './pages/MyOrders/OrderDetails'
 import Quotation from './pages/Quotation/Quotation'
+import { Contact, HowItWorks, PartnerNetwork } from './pages/Info/Info'
 import './App.css'
 
 export default function App() {
@@ -25,6 +26,7 @@ export default function App() {
       <Route path="/packages/:slug" element={<PackageDetails />} /><Route path="/upload-prescription" element={<UploadPrescription />} />
       <Route path="/book" element={<Booking />} /><Route path="/booking-success/:bookingId" element={<BookingSuccess />} /><Route path="/track-booking" element={<Navigate to="/my-orders" replace />} />
       <Route path="/my-orders" element={<MyOrders />} /><Route path="/my-orders/:bookingId" element={<OrderDetails />} /><Route path="/quotation/:quotationId" element={<Quotation />} />
+      <Route path="/contact" element={<Contact />} /><Route path="/partner-network" element={<PartnerNetwork />} /><Route path="/how-it-works" element={<HowItWorks />} />
       <Route path="/admin" element={<Admin />} /><Route path="/admin/prescriptions" element={<Admin />} /><Route path="/admin/prescriptions/:leadId" element={<Admin />} />
       <Route path="/admin/bookings" element={<Admin />} /><Route path="/admin/bookings/:bookingId" element={<Admin />} /><Route path="/admin/tests" element={<Admin />} />
       <Route path="/admin/packages" element={<Admin />} /><Route path="/admin/coupons" element={<Admin />} /><Route path="/admin/collectors" element={<Admin />} />
