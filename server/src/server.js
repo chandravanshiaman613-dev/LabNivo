@@ -26,7 +26,11 @@ app.use(helmet())
 const allowedOrigins = (process.env.CLIENT_URL || '')
   .split(',').map(origin => origin.trim()).filter(Boolean)
 const localOrigins = ['http://localhost:5173', 'http://localhost:5174', 'http://127.0.0.1:5173', 'http://127.0.0.1:5174']
-const productionOrigins = ['https://labnivo.pages.dev']
+const productionOrigins = [
+  'https://labnivo.pages.dev',
+  'https://labnivo.in',
+  'https://www.labnivo.in'
+]
 const corsOrigins = [...new Set([...localOrigins, ...productionOrigins, ...allowedOrigins])]
 const corsOptions = {
   origin(origin, callback) {
