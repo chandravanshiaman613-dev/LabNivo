@@ -41,6 +41,7 @@ function SearchResult({ item, type }) {
         }
       >
         <b>{item.name}</b>
+
         <span>
           {money(item.sellingPrice)} · {item.reportTAT || 'Home collection'}
         </span>
@@ -107,6 +108,7 @@ export default function Home() {
     }
 
     setMeta('name', 'description', description)
+
     setMeta(
       'name',
       'robots',
@@ -121,24 +123,13 @@ export default function Home() {
     setMeta('property', 'og:description', description)
     setMeta('property', 'og:site_name', 'LAB NIVO')
     setMeta('property', 'og:locale', 'en_IN')
-    setMeta(
-      'property',
-      'og:image',
-      'https://labnivo.in/labnivo-logo.png'
-    )
 
     setMeta('name', 'twitter:card', 'summary_large_image')
     setMeta('name', 'twitter:title', title)
     setMeta('name', 'twitter:description', description)
-    setMeta(
-      'name',
-      'twitter:image',
-      'https://labnivo.in/labnivo-logo.png'
-    )
 
     /*
      * Organization structured data.
-     * Only uses information actually established for LAB NIVO.
      */
     const schemaId = 'labnivo-organization-schema'
 
@@ -156,7 +147,6 @@ export default function Home() {
       '@type': 'Organization',
       name: 'LAB NIVO',
       url: 'https://labnivo.in/',
-      logo: 'https://labnivo.in/labnivo-logo.png',
       sameAs: [
         'https://www.instagram.com/labnivo.in/'
       ]
@@ -514,29 +504,6 @@ export default function Home() {
         ))}
       </section>
 
-      {/* SEO INTRODUCTION */}
-      <section className="home-section seo-intro">
-        <span>LAB NIVO DIAGNOSTIC SERVICES</span>
-
-        <h2>
-          Diagnostic Test Booking Made Simple
-        </h2>
-
-        <p>
-          LAB NIVO is a digital platform that helps customers
-          discover and book diagnostic tests and health checkup
-          packages online. Customers can browse available tests,
-          view prices and details, and book convenient sample
-          collection where the service is available.
-        </p>
-
-        <p>
-          If you are looking for diagnostic tests, blood tests,
-          health checkups or home sample collection in Indore,
-          LAB NIVO provides an easy online booking experience.
-        </p>
-      </section>
-
       {/* PACKAGES */}
       <section className="home-section package-showcase">
         <div className="home-heading">
@@ -626,14 +593,11 @@ export default function Home() {
         <span>HOME SAMPLE COLLECTION</span>
 
         <h2>
-          Convenient Diagnostic Sample Collection
+          Diagnostic Tests at Your Doorstep
         </h2>
 
         <p>
-          Choose available diagnostic tests online and select
-          home sample collection where offered. LAB NIVO makes
-          the booking process simple so you can manage your
-          diagnostic test appointment online.
+          Book online and choose home sample collection where available.
         </p>
 
         <Link
@@ -652,7 +616,7 @@ export default function Home() {
         <span>FAQ</span>
 
         <h2 id="labnivo-faq-heading">
-          Frequently Asked Questions
+          FAQs
         </h2>
 
         <details>
