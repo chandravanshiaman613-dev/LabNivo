@@ -88,7 +88,7 @@ export default function Home() {
 
       if (!element) {
         element = document.createElement('meta')
-        element.setAttribute(attribute, value)
+        element.setAttribute('name', value)
         document.head.appendChild(element)
       }
 
@@ -96,7 +96,9 @@ export default function Home() {
     }
 
     const setLink = (rel, href) => {
-      let element = document.head.querySelector(`link[rel="${rel}"]`)
+      let element = document.head.querySelector(
+        `link[rel="${rel}"]`
+      )
 
       if (!element) {
         element = document.createElement('link')
@@ -153,7 +155,8 @@ export default function Home() {
     })
 
     return () => {
-      const existingSchema = document.getElementById(schemaId)
+      const existingSchema =
+        document.getElementById(schemaId)
 
       if (existingSchema) {
         existingSchema.remove()
@@ -185,7 +188,9 @@ export default function Home() {
 
           if (isServiceableCity(detected)) {
             const supported = SUPPORTED_CITIES.find(
-              item => item.toLowerCase() === detected.toLowerCase()
+              item =>
+                item.toLowerCase() ===
+                detected.toLowerCase()
             )
 
             setCity(supported)
@@ -278,46 +283,42 @@ export default function Home() {
    */
   const popularTests = tests
     .filter(item =>
-      /cbc|hba1c|thyroid|vitamin d|liver|kidney/i.test(item.name)
+      /cbc|hba1c|thyroid|vitamin d|liver|kidney/i.test(
+        item.name
+      )
     )
     .slice(0, 4)
 
   /*
    * Homepage carousel
+   *
+   * Main promotional message:
+   * UP TO 80% OFF
+   *
+   * New customer coupon:
+   * NEWLABNIVO - UP TO 90% OFF
    */
   const carousel = [
-    offers[0]
-      ? {
-          eyebrow: 'LIMITED TIME OFFER',
-          title: `Get ${
-            offers[50].discountType === 'PERCENTAGE'
-              ? `${offers[0].discountValue}%`
-              : money(offers[0].discountValue)
-          } OFF`,
-          text: 'Selected tests and packages',
-          link: '/tests',
-          cta: 'Book Now →'
-        }
-      : {
-          eyebrow: 'HEALTH CHECKS',
-          title: 'Care that starts with clarity',
-          text: 'Explore diagnostic tests and health packages.',
-          link: '/tests',
-          cta: 'Explore →'
-        },
+    {
+      eyebrow: 'LIMITED TIME OFFER',
+      title: 'UP TO 80% OFF',
+      text: 'Save more on selected tests and health packages.',
+      link: '/tests',
+      cta: 'Book Now →'
+    },
+    {
+      eyebrow: 'NEW CUSTOMER OFFER',
+      title: 'UP TO 90% OFF',
+      text: 'Use coupon code NEWLABNIVO on your first booking.',
+      link: '/tests',
+      cta: 'Claim Offer →'
+    },
     {
       eyebrow: 'HOME SAMPLE COLLECTION',
       title: 'Diagnostic tests at your doorstep',
       text: 'Convenient sample collection where available.',
       link: '/tests',
       cta: 'Book Test →'
-    },
-    {
-      eyebrow: 'HAVE A PRESCRIPTION?',
-      title: "Upload it and we'll help you",
-      text: 'Share your prescription and our team will assist.',
-      link: '/upload-prescription',
-      cta: 'Upload Now →'
     }
   ]
 
@@ -333,10 +334,14 @@ export default function Home() {
       <section className="lab-hero">
         <div className="lab-hero-copy">
 
-          <span className="hero-brand">LAB NIVO</span>
+          <span className="hero-brand">
+            LAB NIVO
+          </span>
 
           <label className="hero-location">
-            <span aria-hidden="true">📍</span>
+            <span aria-hidden="true">
+              📍
+            </span>
 
             {detectingLocation
               ? 'Detecting your location...'
@@ -347,31 +352,41 @@ export default function Home() {
               onChange={selectCity}
               aria-label="Select service city"
             >
-              <option value="">Select City</option>
+              <option value="">
+                Select City
+              </option>
 
               {SUPPORTED_CITIES.map(item => (
-                <option key={item}>{item}</option>
+                <option key={item}>
+                  {item}
+                </option>
               ))}
             </select>
           </label>
 
+          {/* CLEAN HERO HEADING */}
           <h1>
-            Diagnostic Tests & Home Sample Collection in Indore
-            <br />
-            <em>Accurate Tests. A Healthier Tomorrow.</em>
+            <em>
+              Accurate Tests. A Healthier Tomorrow.
+            </em>
           </h1>
 
           <p>
-            Book diagnostic tests and health checkup packages online
-            with convenient home sample collection in Indore.
+            Book diagnostic tests and health checkup
+            packages online with convenient home sample
+            collection in Indore.
           </p>
 
           <div className="hero-search">
-            <span aria-hidden="true">⌕</span>
+            <span aria-hidden="true">
+              ⌕
+            </span>
 
             <input
               value={search}
-              onChange={event => setSearch(event.target.value)}
+              onChange={event =>
+                setSearch(event.target.value)
+              }
               placeholder="Search tests, packages or health concerns..."
               aria-label="Search diagnostic tests and health packages"
             />
@@ -394,7 +409,9 @@ export default function Home() {
               ) : (
                 <p>
                   No matching tests or packages.{' '}
-                  <Link to="/tests">Browse all tests</Link>
+                  <Link to="/tests">
+                    Browse all tests
+                  </Link>
                 </p>
               )}
             </section>
@@ -435,9 +452,12 @@ export default function Home() {
 
           <div className="hero-lab-card">
             ✦
+
             <span>
               Home collection
-              <small>Simple. Convenient.</small>
+              <small>
+                Simple. Convenient.
+              </small>
             </span>
           </div>
         </div>
@@ -451,7 +471,8 @@ export default function Home() {
         <div
           className="offer-track"
           style={{
-            transform: `translateX(-${slide * 100}%)`
+            transform:
+              `translateX(-${slide * 100}%)`
           }}
         >
           {carousel.map((item, index) => (
@@ -459,11 +480,17 @@ export default function Home() {
               className={`offer-slide offer-${index}`}
               key={item.title}
             >
-              <span>{item.eyebrow}</span>
+              <span>
+                {item.eyebrow}
+              </span>
 
-              <h2>{item.title}</h2>
+              <h2>
+                {item.title}
+              </h2>
 
-              <p>{item.text}</p>
+              <p>
+                {item.text}
+              </p>
 
               <Link to={item.link}>
                 {item.cta}
@@ -477,9 +504,17 @@ export default function Home() {
             <button
               type="button"
               key={item.title}
-              className={slide === index ? 'active' : ''}
-              aria-label={`Show offer ${index + 1}`}
-              onClick={() => setSlide(index)}
+              className={
+                slide === index
+                  ? 'active'
+                  : ''
+              }
+              aria-label={
+                `Show offer ${index + 1}`
+              }
+              onClick={() =>
+                setSlide(index)
+              }
             />
           ))}
         </div>
@@ -498,8 +533,13 @@ export default function Home() {
           ['◉', 'WhatsApp Support']
         ].map(([icon, label]) => (
           <article key={label}>
-            <i aria-hidden="true">{icon}</i>
-            <span>{label}</span>
+            <i aria-hidden="true">
+              {icon}
+            </i>
+
+            <span>
+              {label}
+            </span>
           </article>
         ))}
       </section>
@@ -508,7 +548,9 @@ export default function Home() {
       <section className="home-section package-showcase">
         <div className="home-heading">
           <div>
-            <span>POPULAR HEALTH PACKAGES</span>
+            <span>
+              POPULAR HEALTH PACKAGES
+            </span>
 
             <h2>
               Health checkups made simple
@@ -521,7 +563,9 @@ export default function Home() {
         </div>
 
         {error ? (
-          <p className="form-error">{error}</p>
+          <p className="form-error">
+            {error}
+          </p>
         ) : (
           <div className="package-grid">
             {packages
@@ -540,7 +584,9 @@ export default function Home() {
       <section className="home-section test-showcase">
         <div className="home-heading">
           <div>
-            <span>POPULAR DIAGNOSTIC TESTS</span>
+            <span>
+              POPULAR DIAGNOSTIC TESTS
+            </span>
 
             <h2>
               Find the test you need
@@ -567,7 +613,9 @@ export default function Home() {
 
       {/* HOW IT WORKS */}
       <section className="how-it-works">
-        <span>HOW IT WORKS</span>
+        <span>
+          HOW IT WORKS
+        </span>
 
         <h2>
           Book a diagnostic test in four simple steps
@@ -581,8 +629,13 @@ export default function Home() {
             ['04', 'Get Report']
           ].map(([number, label]) => (
             <article key={number}>
-              <b>{number}</b>
-              <p>{label}</p>
+              <b>
+                {number}
+              </b>
+
+              <p>
+                {label}
+              </p>
             </article>
           ))}
         </div>
@@ -590,14 +643,17 @@ export default function Home() {
 
       {/* HOME COLLECTION */}
       <section className="home-section home-collection-seo">
-        <span>HOME SAMPLE COLLECTION</span>
+        <span>
+          HOME SAMPLE COLLECTION
+        </span>
 
         <h2>
           Diagnostic Tests at Your Doorstep
         </h2>
 
         <p>
-          Book online and choose home sample collection where available.
+          Book online and choose home sample
+          collection where available.
         </p>
 
         <Link
@@ -613,7 +669,9 @@ export default function Home() {
         className="home-section home-faq"
         aria-labelledby="labnivo-faq-heading"
       >
-        <span>FAQ</span>
+        <span>
+          FAQ
+        </span>
 
         <h2 id="labnivo-faq-heading">
           FAQs
@@ -625,8 +683,9 @@ export default function Home() {
           </summary>
 
           <p>
-            LAB NIVO is an online platform for discovering and
-            booking diagnostic tests and health checkup packages.
+            LAB NIVO is an online platform for
+            discovering and booking diagnostic tests
+            and health checkup packages.
           </p>
         </details>
 
@@ -636,9 +695,9 @@ export default function Home() {
           </summary>
 
           <p>
-            Yes. You can browse available tests and packages,
-            check their details and proceed with online booking
-            through LAB NIVO.
+            Yes. You can browse available tests and
+            packages, check their details and proceed
+            with online booking through LAB NIVO.
           </p>
         </details>
 
@@ -648,9 +707,10 @@ export default function Home() {
           </summary>
 
           <p>
-            Home sample collection is available for supported
-            services and locations. Availability is shown during
-            the booking process.
+            Home sample collection is available for
+            supported services and locations.
+            Availability is shown during the booking
+            process.
           </p>
         </details>
 
@@ -660,9 +720,10 @@ export default function Home() {
           </summary>
 
           <p>
-            LAB NIVO currently supports the service cities
-            configured on the platform. Select your city on the
-            website to check availability.
+            LAB NIVO currently supports the service
+            cities configured on the platform. Select
+            your city on the website to check
+            availability.
           </p>
         </details>
 
@@ -672,9 +733,9 @@ export default function Home() {
           </summary>
 
           <p>
-            Use the search box on the homepage to search for
-            diagnostic tests or health packages by name or
-            related information.
+            Use the search box on the homepage to
+            search for diagnostic tests or health
+            packages by name or related information.
           </p>
         </details>
       </section>
@@ -682,15 +743,17 @@ export default function Home() {
       {/* PRESCRIPTION CTA */}
       <section className="home-cta">
         <div>
-          <span>DOCTOR'S PRESCRIPTION</span>
+          <span>
+            DOCTOR'S PRESCRIPTION
+          </span>
 
           <h2>
             Need help choosing tests?
           </h2>
 
           <p>
-            Upload a prescription or speak to our team on
-            WhatsApp.
+            Upload a prescription or speak to our
+            team on WhatsApp.
           </p>
         </div>
 
@@ -717,7 +780,9 @@ export default function Home() {
 
       {/* FOOTER */}
       <footer className="contact-section">
-        <h2>LAB NIVO</h2>
+        <h2>
+          LAB NIVO
+        </h2>
 
         <p>
           Diagnostics at Your Doorstep
