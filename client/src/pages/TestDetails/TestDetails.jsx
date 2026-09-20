@@ -24,89 +24,24 @@ export default function TestDetails() {
       )
   }, [slug])
 
-  // Dynamic SEO for every test page
+  // SEO for individual test page
   useEffect(() => {
     if (!test) return
 
+    const baseUrl = 'https://labnivo.in'
+    const pageUrl = `${baseUrl}/tests/${test.slug}`
     const locationText = 'Indore & Bhopal'
 
-    document.title =
-      `${test.name} in ${locationText} – Price & Home Collection | LabNivo`
+    const title =
+      `${test.name} in ${locationText} | LAB NIVO`
 
     const description =
-      `Book ${test.name} with LabNivo in ${locationText}. Check price, sample type, preparation, report time and home sample collection availability.`
+      `Book ${test.name} with LAB NIVO in ${locationText}. Check price, sample type, preparation, report time and home sample collection availability.`
 
-    let meta = document.querySelector(
-      'meta[name="description"]'
-    )
+    document.title = title
 
-    if (!meta) {
-      meta = document.createElement('meta')
-      meta.setAttribute('name', 'description')
-      document.head.appendChild(meta)
-    }
-
-    meta.setAttribute('content', description)
-
-    let canonical = document.querySelector(
-      'link[rel="canonical"]'
-    )
-
-    if (!canonical) {
-      canonical = document.createElement('link')
-      canonical.setAttribute('rel', 'canonical')
-      document.head.appendChild(canonical)
-    }
-
-    canonical.setAttribute(
-      'href',
-      `${window.location.origin}/tests/${test.slug}`
-    )
-
-    // Open Graph
-    const setMeta = (property, content) => {
-      let element = document.querySelector(
-        `meta[property="${property}"]`
-      )
-
-      if (!element) {
-        element = document.createElement('meta')
-        element.setAttribute('property', property)
-        document.head.appendChild(element)
-      }
-
-      element.setAttribute('content', content)
-    }
-
-    setMeta(
-      'og:title',
-      `${test.name} in ${locationText} | LabNivo`
-    )
-
-    setMeta(
-      'og:description',
-      description
-    )
-
-    setMeta(
-      'og:type',
-      'website'
-    )
-
-    setMeta(
-      'og:url',
-      `${window.location.origin}/tests/${test.slug}`
-    )
-
-    if (test.imageUrl) {
-      setMeta(
-        'og:image',
-        test.imageUrl
-      )
-    }
-
-    // Twitter
-    const setTwitterMeta = (name, content) => {
+    // Helper: normal meta tag
+    const setNameMeta = (name, content) => {
       let element = document.querySelector(
         `meta[name="${name}"]`
       )
@@ -120,64 +55,190 @@ export default function TestDetails() {
       element.setAttribute('content', content)
     }
 
-    setTwitterMeta(
+    // Helper: Open Graph meta
+    const setPropertyMeta = (property, content) => {
+      let element = document.querySelector(
+        `meta[property="${property}"]`
+      )
+
+      if (!element) {
+        element = document.createElement('meta')
+        element.setAttribute('property', property)
+        document.head.appendChild(element)
+      }
+
+      element.setAttribute('content', content)
+    }
+
+    // Meta description
+    setNameMeta('description', description)
+
+    // Robots
+    setNameMeta(
+      'robots',
+      'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'
+    )
+
+    // Canonical
+    let canonical = document.querySelector(
+      'link[rel="canonical"]'
+    )
+
+    if (!canonical) {
+      canonical = document.createElement('link')
+      canonical.setAttribute('rel', 'canonical')
+      document.head.appendChild(canonical)
+    }
+
+    canonical.setAttribute('href', pageUrl)
+
+    // Open Graph
+    setPropertyMeta('og:type', 'website')
+    setPropertyMeta('og:url', pageUrl)
+    setPropertyMeta('og:title', title)
+    setPropertyMeta(
+      'og:description',
+      description
+    )
+    setPropertyMeta('og:site_name', 'LAB NIVO')
+    setPropertyMeta('og:locale', 'en_IN')
+
+    if (test.imageUrl) {
+      setPropertyMeta(
+        'og:image',
+        test.imageUrl
+      )
+    } else {
+      setPropertyMeta(
+        'og:image',
+        `${baseUrl}/labnivo-logo.png`
+      )
+    }
+
+    // Twitter / X
+    setNameMeta(
       'twitter:card',
       'summary_large_image'
     )
 
-    setTwitterMeta(
+    setNameMeta(
       'twitter:title',
-      `${test.name} in ${locationText} | LabNivo`
+      title
     )
 
-    setTwitterMeta(
+    setNameMeta(
       'twitter:description',
       description
     )
 
-    if (test.imageUrl) {
-      setTwitterMeta(
-        'twitter:image',
-        test.imageUrl
+    setNameMeta(
+      'twitter:image',
+      test.imageUrl ||
+        `${baseUrl}/labnivo-logo.png`
+    )
+
+    // Remove old test schemas before adding fresh ones
+    document
+      .querySelectorAll(
+        '[data-labnivo-test-schema="true"]'
       )
-    }
+      .forEach(element => element.remove())
 
-    // Breadcrumb structured data
-    const schemaId = 'labnivo-test-breadcrumb-schema'
+    // Breadcrumb schema
+    const breadcrumbSchema =
+      document.createElement('script')
 
-    let schema = document.getElementById(schemaId)
+    breadcrumbSchema.type =
+      'application/ld+json'
 
-    if (!schema) {
-      schema = document.createElement('script')
-      schema.id = schemaId
-      schema.type = 'application/ld+json'
-      document.head.appendChild(schema)
-    }
+    breadcrumbSchema.dataset.labnivoTestSchema =
+      'true'
 
-    schema.textContent = JSON.stringify({
+    breadcrumbSchema.textContent =
+      JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          {
+            '@type': 'ListItem',
+            position: 1,
+            name: 'Home',
+            item: `${baseUrl}/`
+          },
+          {
+            '@type': 'ListItem',
+            position: 2,
+            name: 'Diagnostic Tests',
+            item: `${baseUrl}/tests`
+          },
+          {
+            '@type': 'ListItem',
+            position: 3,
+            name: test.name,
+            item: pageUrl
+          }
+        ]
+      })
+
+    document.head.appendChild(
+      breadcrumbSchema
+    )
+
+    // Product / test information schema
+    const productSchema =
+      document.createElement('script')
+
+    productSchema.type =
+      'application/ld+json'
+
+    productSchema.dataset.labnivoTestSchema =
+      'true'
+
+    const schemaData = {
       '@context': 'https://schema.org',
-      '@type': 'BreadcrumbList',
-      itemListElement: [
-        {
-          '@type': 'ListItem',
-          position: 1,
-          name: 'Home',
-          item: window.location.origin
-        },
-        {
-          '@type': 'ListItem',
-          position: 2,
-          name: 'Tests',
-          item: `${window.location.origin}/tests`
-        },
-        {
-          '@type': 'ListItem',
-          position: 3,
-          name: test.name,
-          item: `${window.location.origin}/tests/${test.slug}`
+      '@type': 'Product',
+      name: test.name,
+      description:
+        test.shortDescription ||
+        description,
+      url: pageUrl,
+      brand: {
+        '@type': 'Brand',
+        name: 'LAB NIVO'
+      },
+      offers: {
+        '@type': 'Offer',
+        url: pageUrl,
+        priceCurrency: 'INR',
+        price: String(test.sellingPrice),
+        availability:
+          'https://schema.org/InStock',
+        seller: {
+          '@type': 'Organization',
+          name: 'LAB NIVO',
+          url: baseUrl
         }
-      ]
-    })
+      }
+    }
+
+    if (test.imageUrl) {
+      schemaData.image = [test.imageUrl]
+    }
+
+    productSchema.textContent =
+      JSON.stringify(schemaData)
+
+    document.head.appendChild(
+      productSchema
+    )
+
+    return () => {
+      document
+        .querySelectorAll(
+          '[data-labnivo-test-schema="true"]'
+        )
+        .forEach(element => element.remove())
+    }
   }, [test])
 
   if (error) {
@@ -218,7 +279,17 @@ export default function TestDetails() {
 
   return (
     <main className="detail-page">
-      {test.imageUrl && <img className="detail-image" src={test.imageUrl} alt={test.name} onError={event => { event.currentTarget.style.display = 'none' }} />}
+      {test.imageUrl && (
+        <img
+          className="detail-image"
+          src={test.imageUrl}
+          alt={`${test.name} diagnostic test - LAB NIVO`}
+          onError={event => {
+            event.currentTarget.style.display =
+              'none'
+          }}
+        />
+      )}
 
       <Link
         className="back-link"
@@ -250,7 +321,6 @@ export default function TestDetails() {
       </div>
 
       <div className="detail-meta">
-
         <div>
           <b>Sample type</b>
           <span>
@@ -280,21 +350,19 @@ export default function TestDetails() {
               : 'Not available'}
           </span>
         </div>
-
       </div>
 
       <section className="test-seo-content">
-
         <h2>
           {test.name} Test in Indore & Bhopal
         </h2>
 
         <p>
-          LabNivo provides convenient diagnostic test
-          booking with available home sample collection.
-          You can check the test price, sample type,
-          preparation requirements and expected report
-          timeline before booking.
+          LAB NIVO provides convenient diagnostic
+          test booking with available home sample
+          collection. You can check the test price,
+          sample type, preparation requirements and
+          expected report timeline before booking.
         </p>
 
         <h2>
@@ -310,18 +378,18 @@ export default function TestDetails() {
         </h2>
 
         <p>
-          The listed report timeline for this test is{' '}
+          The listed report timeline for this test
+          is{' '}
           <strong>
             {test.reportTAT}
-          </strong>.
-          Actual processing time can depend on the
-          partner laboratory and sample conditions.
+          </strong>
+          . Actual processing time can depend on
+          the partner laboratory and sample
+          conditions.
         </p>
-
       </section>
 
       <div className="detail-actions">
-
         <button
           className="button button-primary"
           onClick={() => {
@@ -332,7 +400,12 @@ export default function TestDetails() {
           Book Test
         </button>
 
-        <button className="button button-secondary" onClick={() => add(item)}>Add to Cart</button>
+        <button
+          className="button button-secondary"
+          onClick={() => add(item)}
+        >
+          Add to Cart
+        </button>
 
         <a
           className="button button-secondary"
@@ -342,9 +415,7 @@ export default function TestDetails() {
         >
           Book on WhatsApp
         </a>
-
       </div>
-
     </main>
   )
 }

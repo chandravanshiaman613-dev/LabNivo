@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://labnivo.in/sitemap.xml

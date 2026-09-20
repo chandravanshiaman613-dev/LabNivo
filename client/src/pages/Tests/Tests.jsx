@@ -21,24 +21,50 @@ export default function Tests() {
 
   // SEO for Tests catalogue page
   useEffect(() => {
-    document.title =
-      'Diagnostic Tests in Indore & Bhopal | LabNivo'
+    const title =
+      'Diagnostic Tests in Indore & Bhopal | LAB NIVO'
 
     const description =
-      'Browse diagnostic blood tests and health tests with LabNivo. Check test prices, sample type, report time and home sample collection availability in Indore and Bhopal.'
+      'Browse diagnostic blood tests and health tests with LAB NIVO. Check test prices, sample type, report time and home sample collection availability in Indore and Bhopal.'
 
-    let meta = document.querySelector(
+    document.title = title
+
+    // Meta description
+    let metaDescription = document.querySelector(
       'meta[name="description"]'
     )
 
-    if (!meta) {
-      meta = document.createElement('meta')
-      meta.setAttribute('name', 'description')
-      document.head.appendChild(meta)
+    if (!metaDescription) {
+      metaDescription = document.createElement('meta')
+      metaDescription.setAttribute(
+        'name',
+        'description'
+      )
+      document.head.appendChild(metaDescription)
     }
 
-    meta.setAttribute('content', description)
+    metaDescription.setAttribute(
+      'content',
+      description
+    )
 
+    // Robots
+    let robots = document.querySelector(
+      'meta[name="robots"]'
+    )
+
+    if (!robots) {
+      robots = document.createElement('meta')
+      robots.setAttribute('name', 'robots')
+      document.head.appendChild(robots)
+    }
+
+    robots.setAttribute(
+      'content',
+      'index, follow, max-image-preview:large'
+    )
+
+    // Canonical
     let canonical = document.querySelector(
       'link[rel="canonical"]'
     )
@@ -51,8 +77,159 @@ export default function Tests() {
 
     canonical.setAttribute(
       'href',
-      `${window.location.origin}/tests`
+      'https://labnivo.in/tests'
     )
+
+    // Open Graph
+    const setMeta = (property, content) => {
+      let element = document.querySelector(
+        `meta[property="${property}"]`
+      )
+
+      if (!element) {
+        element = document.createElement('meta')
+        element.setAttribute('property', property)
+        document.head.appendChild(element)
+      }
+
+      element.setAttribute('content', content)
+    }
+
+    setMeta('og:type', 'website')
+    setMeta(
+      'og:url',
+      'https://labnivo.in/tests'
+    )
+    setMeta(
+      'og:title',
+      'Diagnostic Tests in Indore & Bhopal | LAB NIVO'
+    )
+    setMeta(
+      'og:description',
+      description
+    )
+    setMeta('og:site_name', 'LAB NIVO')
+    setMeta('og:locale', 'en_IN')
+    setMeta(
+      'og:image',
+      'https://labnivo.in/labnivo-logo.png'
+    )
+
+    // Twitter / X
+    let twitterCard = document.querySelector(
+      'meta[name="twitter:card"]'
+    )
+
+    if (!twitterCard) {
+      twitterCard = document.createElement('meta')
+      twitterCard.setAttribute(
+        'name',
+        'twitter:card'
+      )
+      document.head.appendChild(twitterCard)
+    }
+
+    twitterCard.setAttribute(
+      'content',
+      'summary_large_image'
+    )
+
+    let twitterTitle = document.querySelector(
+      'meta[name="twitter:title"]'
+    )
+
+    if (!twitterTitle) {
+      twitterTitle = document.createElement('meta')
+      twitterTitle.setAttribute(
+        'name',
+        'twitter:title'
+      )
+      document.head.appendChild(twitterTitle)
+    }
+
+    twitterTitle.setAttribute(
+      'content',
+      'Diagnostic Tests in Indore & Bhopal | LAB NIVO'
+    )
+
+    let twitterDescription =
+      document.querySelector(
+        'meta[name="twitter:description"]'
+      )
+
+    if (!twitterDescription) {
+      twitterDescription =
+        document.createElement('meta')
+      twitterDescription.setAttribute(
+        'name',
+        'twitter:description'
+      )
+      document.head.appendChild(
+        twitterDescription
+      )
+    }
+
+    twitterDescription.setAttribute(
+      'content',
+      description
+    )
+
+    let twitterImage = document.querySelector(
+      'meta[name="twitter:image"]'
+    )
+
+    if (!twitterImage) {
+      twitterImage = document.createElement('meta')
+      twitterImage.setAttribute(
+        'name',
+        'twitter:image'
+      )
+      document.head.appendChild(twitterImage)
+    }
+
+    twitterImage.setAttribute(
+      'content',
+      'https://labnivo.in/labnivo-logo.png'
+    )
+
+    // Structured data
+    const existingSchema = document.getElementById(
+      'labnivo-tests-schema'
+    )
+
+    if (!existingSchema) {
+      const script = document.createElement(
+        'script'
+      )
+
+      script.id = 'labnivo-tests-schema'
+      script.type = 'application/ld+json'
+
+      script.textContent = JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'CollectionPage',
+        name: 'Diagnostic Tests in Indore & Bhopal',
+        description,
+        url: 'https://labnivo.in/tests',
+        isPartOf: {
+          '@type': 'WebSite',
+          name: 'LAB NIVO',
+          url: 'https://labnivo.in/'
+        }
+      })
+
+      document.head.appendChild(script)
+    }
+
+    return () => {
+      const schema = document.getElementById(
+        'labnivo-tests-schema'
+      )
+
+      if (schema) {
+        schema.remove()
+      }
+    }
   }, [])
 
   useEffect(() => {
@@ -84,7 +261,8 @@ export default function Tests() {
       </h1>
 
       <p>
-        Browse diagnostic tests, check prices, sample
+        Browse diagnostic blood tests, health tests
+        and checkup options. Compare prices, sample
         requirements and report time before booking.
       </p>
 
