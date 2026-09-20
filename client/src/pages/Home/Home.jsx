@@ -74,7 +74,7 @@ export default function Home() {
    */
   useEffect(() => {
     const title =
-      'LAB NIVO | Diagnostic Test Booking & Home Sample Collection in Indore'
+      'LAB NIVO | Diagnostic Test Booking & Home Sample Collection'
 
     const description =
       'LAB NIVO helps you discover and book diagnostic tests online with convenient home sample collection in Indore.'
@@ -290,7 +290,7 @@ export default function Home() {
       ? {
           eyebrow: 'LIMITED TIME OFFER',
           title: `Get ${
-            offers[0].discountType === 'PERCENTAGE'
+            offers[50].discountType === 'PERCENTAGE'
               ? `${offers[0].discountValue}%`
               : money(offers[0].discountValue)
           } OFF`,
