@@ -14,7 +14,11 @@ import {
 } from '../../config/serviceability'
 import { useCart } from '../../context/CartContext'
 import { money } from '../../utils/catalogue'
+import { getBanners, bannerImageUrl } from '../../services/bannerService'
+import ManagedBannerImage from '../../components/ManagedBanner/ManagedBannerImage'
 import './Home.css'
+
+const defaultCarousel = [{ type: 'TEXT', label: 'LIMITED TIME OFFER', title: 'UP TO 80% OFF', description: 'Save more on selected tests and health packages.', buttonText: 'Book Now →', buttonLink: '/tests' }, { type: 'TEXT', label: 'NEW CUSTOMER OFFER', title: 'UP TO 90% OFF', description: 'Use coupon code NEWLABNIVO on your first booking.', buttonText: 'Claim Offer →', buttonLink: '/tests' }, { type: 'TEXT', label: 'HOME SAMPLE COLLECTION', title: 'Diagnostic tests at your doorstep', description: 'Convenient sample collection where available.', buttonText: 'Book Test →', buttonLink: '/tests' }]
 
 function SearchResult({ item, type }) {
   const { add } = useCart()
@@ -68,6 +72,7 @@ export default function Home() {
   const [error, setError] = useState('')
   const [detectingLocation, setDetectingLocation] = useState(false)
   const [slide, setSlide] = useState(0)
+  const [banners, setBanners] = useState(defaultCarousel)
 
   /*
    * SEO
@@ -236,12 +241,16 @@ export default function Home() {
    * Hero carousel
    */
   useEffect(() => {
+    getBanners().then(items => { if (items?.length) setBanners(items) }).catch(() => {})
+  }, [])
+
+  useEffect(() => {
     const timer = window.setInterval(() => {
-      setSlide(current => (current + 1) % 3)
+      setSlide(current => (current + 1) % banners.length)
     }, 4500)
 
     return () => window.clearInterval(timer)
-  }, [])
+  }, [banners.length])
 
   /*
    * Search
@@ -298,7 +307,7 @@ export default function Home() {
    * New customer coupon:
    * NEWLABNIVO - UP TO 90% OFF
    */
-  const carousel = [
+  const hardcodedCarousel = [
     {
       eyebrow: 'LIMITED TIME OFFER',
       title: 'UP TO 80% OFF',
@@ -321,6 +330,8 @@ export default function Home() {
       cta: 'Book Test →'
     }
   ]
+
+  const carousel = banners.length ? banners : hardcodedCarousel
 
   const selectCity = event => {
     setCity(event.target.value)
@@ -477,29 +488,17 @@ export default function Home() {
         >
           {carousel.map((item, index) => (
             <article
-              className={`offer-slide offer-${index}`}
+              className={`offer-slide offer-${index} ${item.type === 'IMAGE' ? 'offer-image' : ''}`}
+              style={item.type === 'IMAGE' ? { position: 'relative', minHeight: 150 } : undefined}
               key={item.title}
             >
-              <span>
-                {item.eyebrow}
-              </span>
-
-              <h2>
-                {item.title}
-              </h2>
-
-              <p>
-                {item.text}
-              </p>
-
-              <Link to={item.link}>
-                {item.cta}
-              </Link>
+              {item.type === 'IMAGE' ? <ManagedBannerImage src={bannerImageUrl(item.imageUrl)} alt={item.label || 'LAB NIVO offer'} /> : <><span>{item.label}</span><h2>{item.title}</h2><p>{item.description}</p></>}
+              {item.buttonText && item.buttonLink && (item.buttonLink.startsWith('/') ? <Link to={item.buttonLink}>{item.buttonText}</Link> : <a href={item.buttonLink}>{item.buttonText}</a>)}
             </article>
           ))}
         </div>
 
-        <div className="offer-dots">
+        {carousel.length > 1 && <div className="offer-dots">
           {carousel.map((item, index) => (
             <button
               type="button"
@@ -517,7 +516,7 @@ export default function Home() {
               }
             />
           ))}
-        </div>
+        </div>}
       </section>
 
       {/* BENEFITS */}
@@ -805,6 +804,10 @@ export default function Home() {
             Need Help
           </Link>
         </p>
+        <div className="footer-socials" aria-label="Follow LAB NIVO">
+          <a href="https://www.instagram.com/labnivo.in" target="_blank" rel="noopener noreferrer" aria-label="LAB NIVO on Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.4" cy="6.7" r="1"/></svg><span>Instagram</span></a>
+          <a href="https://www.facebook.com/share/1JpeKkQceh/" target="_blank" rel="noopener noreferrer" aria-label="LAB NIVO on Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 8h3V4h-3c-3.3 0-5 2-5 5v3H6v4h3v5h4v-5h3l1-4h-4V9c0-.7.3-1 1-1Z"/></svg><span>Facebook</span></a>
+        </div>
       </footer>
 
     </main>

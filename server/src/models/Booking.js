@@ -1,6 +1,9 @@
 import mongoose from 'mongoose'
 
-export const BOOKING_STATUSES = ['NEW_BOOKING', 'CONFIRMED', 'COLLECTOR_ASSIGNED', 'COLLECTION_SCHEDULED', 'SAMPLE_COLLECTED', 'SAMPLE_IN_TRANSIT', 'SAMPLE_RECEIVED', 'TESTING_IN_PROGRESS', 'REPORT_RECEIVED', 'REPORT_DELIVERED', 'COMPLETED', 'CANCELLED']
+export const CUSTOMER_BOOKING_STATUSES = ['Booking Confirmed', 'Sample Collection Scheduled', 'Sample Collected', 'Testing in Progress', 'Report Ready', 'Booking Cancelled']
+export const LEGACY_BOOKING_STATUS_MAP = { NEW_BOOKING: 'Booking Confirmed', CONFIRMED: 'Booking Confirmed', COLLECTOR_ASSIGNED: 'Sample Collection Scheduled', COLLECTION_SCHEDULED: 'Sample Collection Scheduled', SAMPLE_COLLECTED: 'Sample Collected', SAMPLE_IN_TRANSIT: 'Sample Collected', SAMPLE_RECEIVED: 'Sample Collected', TESTING_IN_PROGRESS: 'Testing in Progress', REPORT_RECEIVED: 'Report Ready', REPORT_DELIVERED: 'Report Ready', COMPLETED: 'Report Ready', CANCELLED: 'Booking Cancelled' }
+export const BOOKING_STATUSES = [...CUSTOMER_BOOKING_STATUSES, ...Object.keys(LEGACY_BOOKING_STATUS_MAP)]
+export const friendlyBookingStatus = status => LEGACY_BOOKING_STATUS_MAP[status] || status
 
 const bookingItemSchema = new mongoose.Schema({
   type: { type: String, required: true, enum: ['TEST', 'PACKAGE'] },
@@ -32,7 +35,7 @@ const bookingSchema = new mongoose.Schema({
   prescriptionLeadId: { type: String, default: '', index: true },
   paymentMethod: { type: String, enum: ['PAY_AT_COLLECTION'], default: 'PAY_AT_COLLECTION', required: true },
   paymentStatus: { type: String, enum: ['PENDING', 'PAID', 'FAILED', 'CANCELLED'], default: 'PENDING', required: true },
-  status: { type: String, enum: BOOKING_STATUSES, default: 'NEW_BOOKING', index: true }
+  status: { type: String, enum: BOOKING_STATUSES, default: 'Booking Confirmed', index: true }
 }, { timestamps: true })
 
 export default mongoose.model('Booking', bookingSchema)

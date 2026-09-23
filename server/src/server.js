@@ -16,6 +16,7 @@ import quotationRoutes from './routes/quotationRoutes.js'
 import adminQuotationRoutes from './routes/adminQuotationRoutes.js'
 import adminCatalogueRoutes from './routes/adminCatalogueRoutes.js'
 import { adminRouter as adminCouponRoutes, publicRouter as couponRoutes } from './routes/couponRoutes.js'
+import { adminRouter as adminBannerRoutes, publicRouter as bannerRoutes } from './routes/bannerRoutes.js'
 
 dotenv.config()
 
@@ -49,6 +50,7 @@ app.use(cors(corsOptions))
 app.options(/.*/, cors(corsOptions))
 app.use(express.json({ limit: '1mb' }))
 app.use(express.urlencoded({ extended: true, limit: '1mb' }))
+app.use('/uploads/banners', express.static('uploads/banners', { fallthrough: false, index: false }))
 app.use('/api', rateLimit({ windowMs: 15 * 60 * 1000, limit: 200, standardHeaders: 'draft-8', legacyHeaders: false }))
 
 app.get('/api/health', (_request, response) => {
@@ -68,6 +70,8 @@ app.use('/api/admin', adminQuotationRoutes)
 app.use('/api/admin', adminCatalogueRoutes)
 app.use('/api/admin', adminCouponRoutes)
 app.use('/api/coupons', couponRoutes)
+app.use('/api/banners', bannerRoutes)
+app.use('/api/admin', adminBannerRoutes)
 
 app.use((_request, response) => response.status(404).json({ success: false, message: 'Route not found' }))
 app.use((error, _request, response, _next) => {

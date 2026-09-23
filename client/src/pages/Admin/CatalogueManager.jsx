@@ -7,6 +7,25 @@ const testBlank={name:'',category:'',mrp:'',sellingPrice:'',reportTAT:'',sampleT
 const packageBlank={name:'',description:'',includedTests:[],mrp:'',sellingPrice:'',imageUrl:'',active:true}
 const couponBlank={code:'',discountType:'PERCENTAGE',discountValue:'',customerEligibility:'ALL_CUSTOMERS',minimumOrder:0,maximumDiscount:0,validFrom:new Date().toISOString().slice(0,10),validUntil:'',usageLimit:0,showToCustomers:false,active:true}
 const discount=x=>Number(x.mrp)>0&&Number(x.sellingPrice)>=0?(((Number(x.mrp)-Number(x.sellingPrice))/Number(x.mrp))*100):0
+const testId = test => typeof test === 'string' ? test : test?._id
+function IncludedTestsSelector({ tests, value, onChange }) {
+  const [query, setQuery] = useState('')
+  const selectedIds = (value || []).map(testId).filter(Boolean)
+  const selected = new Set(selectedIds)
+  const normalizedQuery = query.trim().toLowerCase()
+  const filteredTests = tests.filter(test => [test.name, test.category, test.sampleType, test.code].filter(Boolean).join(' ').toLowerCase().includes(normalizedQuery))
+  const selectedTests = tests.filter(test => selected.has(test._id))
+  const update = ids => onChange([...ids])
+  const toggle = id => update(selected.has(id) ? selectedIds.filter(selectedId => selectedId !== id) : [...selectedIds, id])
+  const selectAll = () => update([...new Set([...selectedIds, ...filteredTests.map(test => test._id)])])
+  return <section className="included-tests-selector" aria-label="Included Tests">
+    <div className="included-tests-heading"><b>Included Tests ({selectedIds.length} selected)</b><span>Showing {filteredTests.length} of {tests.length} tests</span></div>
+    {selectedTests.length > 0 && <div className="selected-test-chips" aria-label="Selected tests">{selectedTests.map(test => <span key={test._id}>{test.name}<button type="button" onClick={() => toggle(test._id)} aria-label={`Remove ${test.name}`}>×</button></span>)}</div>}
+    <input className="included-tests-search" type="search" value={query} onChange={event => setQuery(event.target.value)} placeholder="Search tests..." aria-label="Search tests" />
+    <div className="included-tests-actions"><button type="button" className="button button-secondary" onClick={selectAll} disabled={!filteredTests.length}>Select All{normalizedQuery ? ' Results' : ''}</button><button type="button" className="text-button" onClick={() => update([])} disabled={!selectedIds.length}>Clear All</button></div>
+    <div className="included-tests-list">{filteredTests.length ? filteredTests.map(test => <label key={test._id} className="included-test-option"><input type="checkbox" checked={selected.has(test._id)} onChange={() => toggle(test._id)} /><span>{test.name}{test.status === 'inactive' && ' (inactive)'}{test.category && <small>{test.category}</small>}</span></label>) : <p className="included-tests-empty">No tests found</p>}</div>
+  </section>
+}
 function Form({ value, onChange, onSave, onCancel, kind, tests = [] }) {
   const set = (key, val) => onChange({ ...value, [key]: val })
   // Package-only controls must not be evaluated for a coupon form. Rendering
@@ -26,7 +45,7 @@ function Form({ value, onChange, onSave, onCancel, kind, tests = [] }) {
       <label className="wide"><input type="checkbox" checked={value.homeCollection !== false} onChange={e => set('homeCollection', e.target.checked)} /> Home Collection</label>
     </> : <>
       <label className="wide">Description<textarea required value={value.description} onChange={e => set('description', e.target.value)} /></label>
-      <label className="wide">Included Tests<select multiple value={value.includedTests.map(x => typeof x === 'string' ? x : x._id)} onChange={e => set('includedTests', Array.from(e.target.selectedOptions, x => x.value))}>{tests.map(t => <option key={t._id} value={t._id}>{t.name} ({t.status})</option>)}</select></label>
+      <div className="wide"><IncludedTestsSelector tests={tests} value={value.includedTests} onChange={includedTests => set('includedTests', includedTests)} /></div>
     </>}
     <label className="wide"><input type="checkbox" checked={value.active !== false} onChange={e => set('active', e.target.checked)} /> Active</label>
   </div>
