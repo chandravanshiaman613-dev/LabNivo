@@ -4,7 +4,6 @@ import TestCard from '../../components/TestCard/TestCard'
 import PackageCard from '../../components/PackageCard/PackageCard'
 import { getTests } from '../../services/testService'
 import { getPackages } from '../../services/packageService'
-import { getCustomerCoupons } from '../../services/couponService'
 import { whatsappLink } from '../../config/business'
 import {
   getSelectedCity,
@@ -65,11 +64,15 @@ function SearchResult({ item, type }) {
 export default function Home() {
   const [tests, setTests] = useState([])
   const [packages, setPackages] = useState([])
-  const [offers, setOffers] = useState([])
+  const [testsLoading, setTestsLoading] = useState(true)
+  const [packagesLoading, setPackagesLoading] = useState(true)
+  const [testsError, setTestsError] = useState('')
+  const [packagesError, setPackagesError] = useState('')
 
   const [search, setSearch] = useState('')
+  const [searchResults, setSearchResults] = useState(null)
+  const [searchLoading, setSearchLoading] = useState(false)
   const [city, setCity] = useState(getSelectedCity)
-  const [error, setError] = useState('')
   const [detectingLocation, setDetectingLocation] = useState(false)
   const [slide, setSlide] = useState(0)
   const [banners, setBanners] = useState(defaultCarousel)
@@ -220,22 +223,55 @@ export default function Home() {
    * Load catalogue
    */
   useEffect(() => {
-    Promise.all([
-      getTests({ status: 'active' }),
-      getPackages(),
-      getCustomerCoupons().catch(() => [])
-    ])
-      .then(([testData, packageData, couponData]) => {
-        setTests(testData)
-        setPackages(packageData)
-        setOffers(couponData)
-      })
-      .catch(() => {
-        setError(
-          'Unable to load catalogue highlights. Please try again.'
-        )
-      })
+    let active = true
+    getTests({ status: 'active', highlight: 'popular', limit: 4 })
+      .then(data => { if (active) setTests(data) })
+      .catch(() => { if (active) setTestsError('Unable to load tests right now.') })
+      .finally(() => { if (active) setTestsLoading(false) })
+    return () => { active = false }
   }, [])
+
+  useEffect(() => {
+    let active = true
+    getPackages({ limit: 3 })
+      .then(data => { if (active) setPackages(data) })
+      .catch(() => { if (active) setPackagesError('Unable to load packages right now.') })
+      .finally(() => { if (active) setPackagesLoading(false) })
+    return () => { active = false }
+  }, [])
+
+  useEffect(() => {
+    const query = search.trim()
+    if (query.length < 2) {
+      setSearchResults(null)
+      setSearchLoading(false)
+      return undefined
+    }
+    let active = true
+    setSearchLoading(true)
+    const timer = window.setTimeout(() => {
+      Promise.allSettled([
+        getTests({ status: 'active', search: query, limit: 4 }),
+        getPackages({ search: query, limit: 3 })
+      ]).then(([testResult, packageResult]) => {
+        if (!active) return
+        const testData = testResult.status === 'fulfilled' ? testResult.value : []
+        const packageData = packageResult.status === 'fulfilled' ? packageResult.value : []
+        setSearchResults({
+          query,
+          items: [
+            ...testData.map(item => ({ item, type: 'TEST' })),
+            ...packageData.map(item => ({ item, type: 'PACKAGE' }))
+          ].slice(0, 6)
+        })
+        setSearchLoading(false)
+      })
+    }, 220)
+    return () => {
+      active = false
+      window.clearTimeout(timer)
+    }
+  }, [search])
 
   /*
    * Hero carousel
@@ -255,7 +291,7 @@ export default function Home() {
   /*
    * Search
    */
-  const matches = useMemo(() => {
+  const localMatches = useMemo(() => {
     const query = search.trim().toLowerCase()
 
     if (!query) return []
@@ -286,6 +322,7 @@ export default function Home() {
 
     return [...testMatches, ...packageMatches].slice(0, 6)
   }, [search, tests, packages])
+  const matches = searchResults?.query === search.trim() ? searchResults.items : localMatches
 
   /*
    * Popular tests
@@ -409,7 +446,9 @@ export default function Home() {
               aria-live="polite"
               aria-label="Search results"
             >
-              {matches.length ? (
+              {searchLoading && !matches.length ? (
+                <p>Searching tests and packages...</p>
+              ) : matches.length ? (
                 matches.map(({ item, type }) => (
                   <SearchResult
                     key={`${type}-${item._id}`}
@@ -561,10 +600,12 @@ export default function Home() {
           </Link>
         </div>
 
-        {error ? (
-          <p className="form-error">
-            {error}
-          </p>
+        {packagesLoading ? (
+          <div className="package-grid home-loading-grid" aria-busy="true" aria-label="Loading packages">
+            {Array.from({ length: 3 }, (_, index) => <div className="home-card-skeleton" key={index}><i/><b/><span/><span/><small/></div>)}
+          </div>
+        ) : packagesError ? (
+          <p className="catalogue-state home-catalogue-error">{packagesError}</p>
         ) : (
           <div className="package-grid">
             {packages
@@ -597,17 +638,19 @@ export default function Home() {
           </Link>
         </div>
 
-        <div className="test-grid">
-          {(popularTests.length
-            ? popularTests
-            : tests.slice(0, 4)
-          ).map(item => (
-            <TestCard
-              key={item.slug}
-              test={item}
-            />
-          ))}
-        </div>
+        {testsLoading ? (
+          <div className="test-grid home-loading-grid" aria-busy="true" aria-label="Loading tests">
+            {Array.from({ length: 4 }, (_, index) => <div className="home-card-skeleton" key={index}><i/><b/><span/><span/><small/></div>)}
+          </div>
+        ) : testsError ? (
+          <p className="catalogue-state home-catalogue-error">{testsError}</p>
+        ) : (
+          <div className="test-grid">
+            {(popularTests.length ? popularTests : tests.slice(0, 4)).map(item => (
+              <TestCard key={item.slug} test={item} />
+            ))}
+          </div>
+        )}
       </section>
 
       {/* HOW IT WORKS */}

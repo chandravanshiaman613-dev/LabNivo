@@ -11,6 +11,8 @@ const packageSchema = new mongoose.Schema({
   preparation: { type: String, required: true, trim: true },
   reportTAT: { type: String, required: true, trim: true },
   imageUrl: { type: String, trim: true, default: '' },
+  featured: { type: Boolean, default: false, index: true },
+  displayOrder: { type: Number, default: 0, min: 0, index: true },
   status: { type: String, enum: ['active', 'inactive'], default: 'active', index: true }
 }, { timestamps: true })
 

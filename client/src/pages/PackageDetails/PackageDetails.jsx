@@ -11,7 +11,7 @@ export default function PackageDetails() {
   const [pack, setPack] = useState(null)
   const [error, setError] = useState('')
 
-  const { add } = useCart()
+  const { add, setCouple } = useCart()
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -414,6 +414,16 @@ export default function PackageDetails() {
         onClick={() => add(item)}
       >
         Add to Cart
+      </button>
+
+      <button
+        className="button button-secondary"
+        onClick={() => {
+          add(item)
+          setCouple(pack.slug, true)
+        }}
+      >
+        + Add Another Person — Save ₹100
       </button>
 
       <a

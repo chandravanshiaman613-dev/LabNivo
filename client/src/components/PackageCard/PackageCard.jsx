@@ -5,12 +5,32 @@ import CatalogueVisual from '../CatalogueVisual/CatalogueVisual'
 import './PackageCard.css'
 
 export default function PackageCard({ pack }) {
-  const { add, remove, items } = useCart()
+  const { add, remove, items, setCouple } = useCart()
   const navigate = useNavigate()
   const item = { ...pack, type: 'PACKAGE', reference: pack._id, price: pack.sellingPrice }
-  const added = items.some(entry => entry.slug === pack.slug)
+  const addedItem = items.find(entry => entry.slug === pack.slug)
+  const added = Boolean(addedItem)
   const book = () => { add(item); navigate('/book') }
+  const addPerson = () => {
+    if (!added) add(item)
+    setCouple(pack.slug, true)
+  }
   const included = (pack.includedTests || []).map(test => test.name).join(', ')
 
-  return <article className="package-card"><CatalogueVisual type="package" label={`${pack.name || ''} ${pack.description || ''}`} imageUrl={pack.imageUrl} /><div className="package-badge">Health package</div><Link to={`/packages/${pack.slug}`}><h3>{pack.name}</h3></Link><p>{included || pack.description}</p><div><span className="mrp">{money(pack.mrp)}</span><strong>{money(pack.sellingPrice)}</strong><em>{pack.discountPercent}% OFF</em></div><div className="package-actions"><button className={added ? 'added-button' : ''} onClick={() => added ? remove(pack.slug) : add(item)}>{added ? 'Added' : 'Add to Cart'}</button>{added && <button className="remove-button" onClick={() => remove(pack.slug)}>Remove</button>}<button className="book-button" onClick={book}>Book Package</button></div></article>
+  return <article className="package-card">
+    <CatalogueVisual type="package" label={`${pack.name || ''} ${pack.description || ''}`} imageUrl={pack.imageUrl} />
+    <div className="package-badge">Health package</div>
+    <Link to={`/packages/${pack.slug}`}><h3>{pack.name}</h3></Link>
+    <p>{included || pack.description}</p>
+    <div><span className="mrp">{money(pack.mrp)}</span><strong>{money(pack.sellingPrice)}</strong><em>{pack.discountPercent}% OFF</em></div>
+    <div className="couple-promo"><b>COUPLE OFFER</b><span>Add another person &amp; save &#8377;100</span></div>
+    <div className="package-actions">
+      <button className={added ? 'added-button' : ''} onClick={() => added ? remove(pack.slug) : add(item)}>{added ? 'Added' : 'Add to Cart'}</button>
+      {added && <button className="remove-button" onClick={() => remove(pack.slug)}>Remove</button>}
+      <button className="book-button" onClick={book}>Book Package</button>
+    </div>
+    <button className="couple-toggle" onClick={addedItem?.couple ? () => setCouple(pack.slug, false) : addPerson}>
+      {addedItem?.couple ? 'Remove second person' : '+ Add Another Person'}
+    </button>
+  </article>
 }

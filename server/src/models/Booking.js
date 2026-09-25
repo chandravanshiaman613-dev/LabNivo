@@ -13,7 +13,9 @@ const bookingItemSchema = new mongoose.Schema({
   quantity: { type: Number, required: true, min: 1, default: 1 },
   mrp: { type: Number, required: true, min: 0 },
   discountPercent: { type: Number, required: true, min: 0, max: 100 },
-  sellingPrice: { type: Number, required: true, min: 0 }
+  sellingPrice: { type: Number, required: true, min: 0 },
+  person2: { name: { type: String, trim: true }, age: { type: Number, min: 1, max: 120 }, gender: { type: String, enum: ['male', 'female', 'other'] } },
+  coupleDiscount: { type: Number, required: true, min: 0, default: 0 }
 }, { _id: false })
 
 const bookingSchema = new mongoose.Schema({
@@ -26,6 +28,7 @@ const bookingSchema = new mongoose.Schema({
   subtotal: { type: Number, required: true, min: 0, default: 0 },
   couponCode: { type: String, trim: true, uppercase: true, default: '' },
   discountAmount: { type: Number, required: true, min: 0, default: 0 },
+  coupleDiscount: { type: Number, required: true, min: 0, default: 0 },
   collectionCharge: { type: Number, required: true, min: 0, default: 0 },
   address: { type: String, required: true, trim: true },
   preferredDate: { type: Date, required: true },
